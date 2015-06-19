@@ -1,0 +1,27 @@
+﻿
+<Controls:MetroWindow
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="AutomateMyHome.ScenarioEditor"
+                      Title="Scenario Editor" Height="467.979" Width="603.107"
+                      Icon="/Ressources/logoHCBleu.png" MinWidth="600"
+                       >
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" Background="#41B1E1" >
+            <Image  Height="100" Width="100" HorizontalAlignment="Right" Source="Ressources/homeconnector.png" Margin="5,5,0,5" />
+            <Label Content="Scenario Editor" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="Open Sans" FontSize="36" FontWeight="Bold" Foreground="White"/>
+        </DockPanel>
+        <Rectangle DockPanel.Dock="Bottom" Height="25" Fill="#41B1E1" ></Rectangle>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+            <StackPanel Name="mainPanel"  />
+        </ScrollViewer>
+        
+
+
+
+    </DockPanel>
+
+
+</Controls:MetroWindow>
