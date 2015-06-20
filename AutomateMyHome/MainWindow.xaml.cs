@@ -39,17 +39,57 @@ namespace AutomateMyHome
 
 
             InitializeComponent();
-            System.Drawing.Bitmap homeConnectorBmp = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("homeconnector"); ;
-            logo.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(homeConnectorBmp.GetHbitmap(),
-                       IntPtr.Zero,
-                       System.Windows.Int32Rect.Empty,
-                       BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            this.Closed += MainWindow_Closed;
+            logo.Source = Utils.getImageSource(Properties.Resources.homeconnector);
             this.Rooms = new List<Room>();
             this.SizeChanged += MainWindow_SizeChanged;
             pwdTxtBox.KeyDown += pwdTxtBox_KeyDown;
             ipTxtBox.KeyDown += pwdTxtBox_KeyDown;
+            Image imgHome = new Image();
+            imgHome.Source = Utils.getImageSource(Properties.Resources.home);
+            imgHome.Width = 48;
+            imgHome.Height = 48;
+            homeBtn.Background = Utils.getColor(Utils.darkBlue);
+            homeBtn.Content = imgHome;
 
+            Image imgSettings = new Image();
+            imgSettings.Source = Utils.getImageSource(Properties.Resources.settingsBtn);
+            imgSettings.Width = 48;
+            imgSettings.Height = 48;
+            settingBtn.Content = imgSettings;
+            settingBtn.Background = Utils.getColor(Utils.darkBlue);
 
+            Image imgProfil = new Image();
+            imgProfil.Source = Utils.getImageSource(Properties.Resources.action);
+            imgProfil.Width = 48;
+            imgProfil.Height = 48;
+            actionBtn.Content = imgProfil;
+            actionBtn.Background = Utils.getColor(Utils.darkBlue);
+
+            Image imgEvent = new Image();
+            imgEvent.Source = Utils.getImageSource(Properties.Resources.calendar);
+            imgEvent.Width = 48;
+            imgEvent.Height = 48;
+            eventBtn.Content = imgEvent;
+            eventBtn.Background = Utils.getColor(Utils.darkBlue);
+
+            Image imgExit = new Image();
+            imgExit.Source = Utils.getImageSource(Properties.Resources.exit);
+            imgExit.Width = 48;
+            imgExit.Height = 48;
+            disconectBtn.Content = imgExit;
+            disconectBtn.Background = Utils.getColor(Utils.darkBlue);
+        }
+
+        void MainWindow_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                this.client.Disconnect();
+            }
+            catch { 
+            
+            }
         }
 
         void pwdTxtBox_KeyDown(object sender, KeyEventArgs e)

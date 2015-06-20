@@ -48,6 +48,22 @@ namespace AutomateMyHome
             }
             return ans;
         }
+
+
+        public static List<String> getScenariosNames(SshClient c)
+        {
+            List<String> ans = new List<String>();
+            SshCommand cmd = c.RunCommand("ls HomeConnector/profils ");
+            string[] profils = cmd.Result.Split('\n');
+            int size = profils.Length;
+            for (int i = 0; i < size - 1; i++)
+            {
+                string profil = profils[i];
+                string[] name = profil.Split('.');
+                ans.Add(name[0]);
+            }
+            return ans;
+        }
         public static List<String> getCodes(SshClient c, string fileName)
         {
             List<String> ans = new List<String>();

@@ -24,14 +24,13 @@ namespace AutomateMyHome
         public void InitialyzeSettingPanel()
         {
             this.Children.Clear();
-            BrushConverter bc = new BrushConverter();
             StackPanel panel = new StackPanel();
-            panel.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            panel.Background = Utils.getColor(Utils.lightBlue);
             panel.Margin = new Thickness(10, 10, 10, 10);
             Label pwdChgLbl = new Label();
-            pwdChgLbl.FontWeight = FontWeights.Bold;
-            pwdChgLbl.FontFamily = new FontFamily("Open Sans");
-            pwdChgLbl.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
+            pwdChgLbl.FontWeight = Utils.weightFont;
+            pwdChgLbl.FontFamily = Utils.appFont;
+            pwdChgLbl.Foreground = Utils.getColor(Utils.white);
             pwdChgLbl.FontSize = 34;
             pwdChgLbl.Margin = new Thickness(5, 5, 5, 5);
             pwdChgLbl.Content = "Change password";
@@ -40,31 +39,45 @@ namespace AutomateMyHome
             WrapPanel newPwdPnl1 = new WrapPanel();
             newPwdPnl1.Margin = new Thickness(5, 5, 5, 5);
             Label newPwdLbl1 = new Label();
-            newPwdLbl1.FontWeight = FontWeights.Bold;
-            newPwdLbl1.FontFamily = new FontFamily("Open Sans");
-            newPwdLbl1.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
+            newPwdLbl1.FontWeight = Utils.weightFont;
+            newPwdLbl1.FontFamily = Utils.appFont;
+            newPwdLbl1.Foreground = Utils.getColor(Utils.white);
             newPwdLbl1.Content = "New password : ";
+            newPwdLbl1.FontSize = 24;
             PasswordBox newPwdBox1 = new PasswordBox();
             newPwdBox1.Width = 250;
             newPwdPnl1.Children.Add(newPwdLbl1);
             newPwdPnl1.Children.Add(newPwdBox1);
+            newPwdBox1.FontSize = 24;
+
+            newPwdBox1.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            newPwdBox1.FontFamily = Utils.appFont;
+            newPwdBox1.FontWeight = Utils.weightFont;
             panel.Children.Add(newPwdPnl1);
             WrapPanel newPwdPnl2 = new WrapPanel();
             newPwdPnl2.Margin = new Thickness(5, 5, 5, 5);
             Label newPwdLbl2 = new Label();
-            newPwdLbl2.FontWeight = FontWeights.Bold;
-            newPwdLbl2.FontFamily = new FontFamily("Open Sans");
-            newPwdLbl2.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
+            newPwdLbl2.FontWeight = Utils.weightFont;
+            newPwdLbl2.FontFamily = Utils.appFont;
+            newPwdLbl2.Foreground = Utils.getColor(Utils.white);
             newPwdLbl2.Content = "New password : ";
+            newPwdLbl2.FontSize = 24;
             PasswordBox newPwdBox2 = new PasswordBox();
             newPwdBox2.Width = 250;
+            newPwdBox2.FontSize = 24;
             newPwdPnl2.Children.Add(newPwdLbl2);
             newPwdPnl2.Children.Add(newPwdBox2);
+            newPwdBox2.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            newPwdBox2.FontFamily = Utils.appFont;
+            newPwdBox2.FontWeight = Utils.weightFont;
             panel.Children.Add(newPwdPnl2);
             Button changePwdBtn = new Button();
             changePwdBtn.Margin = new Thickness(5, 5, 5, 5);
             changePwdBtn.Width = 150;
-            changePwdBtn.Content = "Change password";
+            changePwdBtn.Content = "Change";
+            changePwdBtn.FontFamily = Utils.appFont;
+            changePwdBtn.FontWeight = Utils.weightFont;
+            changePwdBtn.FontSize = 24;
             Object[] pwdChanges = new Object[] { newPwdBox1, newPwdBox2, resultLbl };
             changePwdBtn.Tag = pwdChanges;
             changePwdBtn.Click += changePwdBtn_Click;
@@ -74,23 +87,19 @@ namespace AutomateMyHome
 
             DockPanel addPanel = new DockPanel();
             addPanel.Margin = new Thickness(10, 10, 10, 10);
-            addPanel.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            addPanel.Background = Utils.getColor(Utils.lightBlue);
             Label addLbl = new Label();
             WrapPanel centeredPanel = new WrapPanel();
-            addLbl.FontWeight = FontWeights.Bold;
-            addLbl.FontFamily = new FontFamily("Open Sans");
-            addLbl.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
+            addLbl.FontWeight = Utils.weightFont;
+            addLbl.FontFamily = Utils.appFont;
+            addLbl.Foreground = Utils.getColor(Utils.white);
             addLbl.FontSize = 34;
             addLbl.Margin = new Thickness(5, 5, 5, 5);
             addLbl.Content = "Add receptor";
             DockPanel.SetDock(addLbl, Dock.Top);
             addPanel.Children.Add(addLbl);
-            System.Drawing.Bitmap bmpLight = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("lampPlus");
             Image imgLight = new Image();
-            imgLight.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpLight.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgLight.Source = Utils.getImageSource(Properties.Resources.lampPlus);
             
             imgLight.MouseLeftButtonDown += addLight_MouseLeftButtonDown;
 
@@ -99,20 +108,14 @@ namespace AutomateMyHome
             imgLight.Margin = new Thickness(10, 10, 10, 10);
             imgLight.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             centeredPanel.Children.Add(imgLight);
-
-            System.Drawing.Bitmap bmpPlug = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("plugPlus");
             Image imgPlug = new Image();
-            imgPlug.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpPlug.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgPlug.Source = Utils.getImageSource(Properties.Resources.plugPlus);
             imgPlug.MouseLeftButtonDown += addPlug_MouseLeftButtonDown;
 
             imgPlug.Width = 128;
             imgPlug.Height = 128;
             imgPlug.Margin = new Thickness(10, 10, 10, 10);
             imgPlug.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            imgPlug.Margin = new Thickness(150, 0, 0, 0);
             centeredPanel.Children.Add(imgPlug);
             centeredPanel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             centeredPanel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
@@ -121,15 +124,15 @@ namespace AutomateMyHome
             addPanel.Children.Add(centeredPanel);
 
 
-            DockPanel removePanel = new DockPanel();
+            WrapPanel removePanel = new WrapPanel();
             removePanel.Margin = new Thickness(10, 10, 10, 10);
-            removePanel.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            removePanel.Background = Utils.getColor(Utils.lightBlue);
 
             Label rmvLabel = new Label();
-            rmvLabel.FontFamily = new FontFamily("Open Sans");
-            rmvLabel.FontWeight = FontWeights.Bold;
-            rmvLabel.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
-            rmvLabel.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            rmvLabel.FontFamily = Utils.appFont;
+            rmvLabel.FontWeight = Utils.weightFont;
+            rmvLabel.Foreground = Utils.getColor(Utils.white);
+            rmvLabel.Background = Utils.getColor(Utils.lightBlue);
             rmvLabel.FontSize = 34;
             rmvLabel.Content = "Remove receptor :";
             List<ComboBoxItem> cbL = new List<ComboBoxItem>();
@@ -138,21 +141,17 @@ namespace AutomateMyHome
             foreach (Receptor r in receptors)
             {
                 ComboBoxItem cbi = new ComboBoxItem();
-                cbi.FontFamily = new FontFamily("Open Sans");
+                cbi.FontFamily = Utils.appFont;
                 cbi.FontSize = 34;
                 cbi.Content = r.Name + " in " +r.Room.Name;
                 cbL.Add(cbi);
             }
             ComboBox cb = new ComboBox();
             cb.ItemsSource = cbL;
-            cb.Margin = new Thickness(0, 10, 10, 10);
+            cb.Margin = new Thickness(10, 10, 10, 10);
             cb.Width = 350;
-            System.Drawing.Bitmap bmpDel = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("delete"); ;
             Image imgDel = new Image();
-            imgDel.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpDel.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgDel.Source = Utils.getImageSource(Properties.Resources.delete);
             imgDel.Width = 24;
             imgDel.Height = 24;
             imgDel.Margin = new Thickness(5, 0, 5, 0);
@@ -164,6 +163,7 @@ namespace AutomateMyHome
             removePanel.Children.Add(rmvLabel);
             removePanel.Children.Add(cb);
             wp.Children.Add(imgDel);
+            wp.VerticalAlignment = System.Windows.VerticalAlignment.Center;
             removePanel.Children.Add(wp);
             this.Children.Add(addPanel);
             this.Children.Add(removePanel);
@@ -210,14 +210,14 @@ namespace AutomateMyHome
                     BrushConverter bc = new BrushConverter();
                     returnLbl.Foreground = (Brush)bc.ConvertFrom("#00a11a"); ;
                     returnLbl.Content = "Password changed";
-                    returnLbl.FontWeight = FontWeights.Bold;
+                    returnLbl.FontWeight = Utils.weightFont;
                 }
                 else
                 {
                     BrushConverter bc = new BrushConverter();
                     returnLbl.Foreground = (Brush)bc.ConvertFrom("#B64741");
                     returnLbl.Content = "Could not change the password";
-                    returnLbl.FontWeight = FontWeights.Bold;
+                    returnLbl.FontWeight = Utils.weightFont;
                 }
                 pwd1.Password = "";
                 pwd2.Password = "";
@@ -227,7 +227,7 @@ namespace AutomateMyHome
                 BrushConverter bc = new BrushConverter();
                 returnLbl.Foreground = (Brush)bc.ConvertFrom("#B64741");
                 returnLbl.Content = "Could not change the password";
-                returnLbl.FontWeight = FontWeights.Bold;
+                returnLbl.FontWeight = Utils.weightFont;
             }
 
         }

@@ -8,10 +8,10 @@ namespace AutomateMyHome
 {   
     public class SpecialEventToSendEvAndScenario
     {
-        public List<Scenario> scenarList { get; set; }
+        public List<String> scenarList { get; set; }
         public Event ev { get; set; }
 
-        public SpecialEventToSendEvAndScenario(List<Scenario> scenarList,Event ev)
+        public SpecialEventToSendEvAndScenario(List<String> scenarList, Event ev)
         {
             this.scenarList = scenarList;
             this.ev = ev;

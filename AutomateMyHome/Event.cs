@@ -47,18 +47,220 @@ namespace AutomateMyHome
             this.Day = day;
             this.Month = month;
             this.DayOfTheWeek = dayOfTheWeek;
-            this.client.RunCommand("crontab " + fileName);
+            //this.client.RunCommand("crontab " + fileName);
         }
 
-        
 
-        public String  getName()
+
+        public String getName()
         {
-            return this.Scenario.Replace('-',' ')+" : min :" + this.Minutes +" hour :" + this.Hour + " day :" +this.Day + " month :" + this.Month + " ";
+            String s = "";
+            s += this.Scenario.Replace("-"," ") + " is executed";
+            s = MinutePartOfName(s);
+            s = DayPartOfName(s);
+            return s;
+        }
+        private string MinutePartOfName(String s)
+        {
+            if (this.Hour.Equals("*") && this.Minutes.Equals("*"))
+            {
+                s += " every minute";
+            }
+            else
+            {
+                if (this.Hour.Equals("*"))
+                {
+                    s += " every hour";
+                    if (this.Minutes.Equals("*"))
+                    {
+                        s += " every minute";
+                    }
+                    else
+                    {
+                        s += " at " + this.Minutes + " minute";
+                    }
+                }
+                else
+                {
+                    String rightHours = addNumberIfSingle(this.Hour);
+                    String rightMinutes = addNumberIfSingle(this.Minutes);
+                    s += " at ";
+                    if (this.Minutes.Equals("*"))
+                    {
+                        s += this.Hour + " every minute";
+                    }
+                    else
+                    {
+                        s += rightHours + ":" + rightMinutes;
+                    }
+                }
+            }
+            return s;
+        }
+        private String DayPartOfName(String s)
+        {
+            String rightMonth = giveToMonthTheRightName(this.Month);
+            String rightDayOfTheWeek = getStringFromNumberDayOfTheWeek(this.DayOfTheWeek);
+            s += ", ";
+            if (this.DayOfTheWeek.Equals("*") && this.Day.Equals("*") && this.Month.Equals("*"))
+            {
+                s += "every day";
+            }
+            else
+            {
+                if (!this.DayOfTheWeek.Equals("*"))
+                {
+                    if (this.Day.Equals("*"))
+                    {
+                        s += "every " + rightDayOfTheWeek;
+                    }
+                    else
+                    {
+                        s += "the " + rightDayOfTheWeek + " " + ChangeNumberInWord(this.Day);
+                    }
+                }
+                else
+                {
+                    if (this.Day.Equals("*"))
+                    {
+                        s += "every day";
+                    }
+                    else
+                    {
+                        s += "the " + ChangeNumberInWord(this.Day);
+                    }
+                }
+                if (this.Month.Equals("*"))
+                {
+                    s += " of every month";
+                }
+                else
+                {
+                    s += " of " + rightMonth;
+                }
+            }
+            return s;
+        }
+        private String ChangeNumberInWord(String s)
+        {
+            String[] slits = s.Split();
+            String rightStringNumber;
+            if (slits.Count() > 1)
+            {
+                rightStringNumber = slits[1];
+            }
+            else
+            {
+                rightStringNumber = slits[0];
+            }
+            switch (rightStringNumber)
+            {
+                case "0":
+                    s += "";
+                    break;
+                case "1":
+                    s += "st";
+                    break;
+                case "2":
+                    s += "nd";
+                    break;
+                case "3":
+                    s += "rd";
+                    break;
+                default:
+                    s += "th";
+                    break;
+            }
+            if (s.Equals("0"))
+            {
+                s = "";
+            }
+            return s;
+        }
+        public String addNumberIfSingle(String s)
+        {
+            if (s.Count() == 1)
+            {
+                s = "0" + s;
+            }
+            return s;
+        }
+        private String getStringFromNumberDayOfTheWeek(string rightString)
+        {
+
+            switch (rightString)
+            {
+                case "1":
+                    rightString = "Monday";
+                    break;
+                case "2":
+                    rightString = "Tuesday";
+                    break;
+                case "3":
+                    rightString = "Wednesday";
+                    break;
+                case "4":
+                    rightString = "Thursday";
+                    break;
+                case "5":
+                    rightString = "Friday";
+                    break;
+                case "6":
+                    rightString = "Saturday";
+                    break;
+                case "0":
+                    rightString = "Sunday";
+                    break;
+            }
+            return rightString;
+        }
+        private string giveToMonthTheRightName(string s)
+        {
+            switch (s)
+            {
+                case "1":
+                    s = "January";
+                    break;
+                case "2":
+                    s = "February";
+                    break;
+                case "3":
+                    s = "March";
+                    break;
+                case "4":
+                    s = "April";
+                    break;
+                case "5":
+                    s = "May";
+                    break;
+                case "6":
+                    s = "June";
+                    break;
+                case "7":
+                    s = "July";
+                    break;
+                case "8":
+                    s = "August";
+                    break;
+                case "9":
+                    s = "September";
+                    break;
+                case "10":
+                    s = "October";
+                    break;
+                case "11":
+                    s = "November";
+                    break;
+                case "12":
+                    s = "December";
+                    break;
+            }
+            return s;
         }
 
         public void addToContrab(){
             this.client.RunCommand("echo \"" + this.Minutes + " " + this.Hour + " " + this.Day + " " + this.Month + " " + DayOfTheWeek + " HomeConnector/profils/" + Scenario.Replace(' ', '-') + ".sh" + "\" | tee -a "+ fileName);
+            this.client.RunCommand("crontab " + fileName);
         }
 
         public void removeFromContrab()
@@ -93,8 +295,8 @@ namespace AutomateMyHome
                 Event ev = new Event(client,list3[0],list3[1],list3[2],list3[3],list3[4],list4[list4.Length - 2]);
                 eventList.Add(ev);
              }
-            recreateScript(client);
-            addAllEventToCrontab(eventList);
+            //recreateScript(client);
+            //addAllEventToCrontab(eventList);
             return eventList;
         }
 

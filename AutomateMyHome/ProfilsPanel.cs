@@ -25,22 +25,18 @@ namespace AutomateMyHome
         public void InitialyzeProfils()
         {
             this.Children.Clear();
-            List<Scenario> scs = Scenario.getScenarios(client);
+            List<String> scsNames = Scenario.getScenariosNames(client);
             this.Width = this.Width - 110;
             this.Background = Utils.getColor(Utils.darkBlue);
-            foreach (Scenario sc in scs)
+            
+            foreach (String sc in scsNames)
             {
 
                 DockPanel dp = new DockPanel();
                 dp.Background = Utils.getColor(Utils.lightBlue);
                 dp.Margin = new Thickness(10, 10, 10, 0);
-
-                System.Drawing.Bitmap bmpStart = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("start"); ;
                 Image imgStart = new Image();
-                imgStart.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpStart.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                imgStart.Source = Utils.getImageSource(Properties.Resources.start);
                 imgStart.Width = 24;
                 imgStart.Height = 48;
                 imgStart.Margin = new Thickness(5, 5, 5, 5);
@@ -49,19 +45,15 @@ namespace AutomateMyHome
                 imgStart.MouseLeftButtonDown += imgStart_MouseLeftButtonDown;
 
                 Label name = new Label();
-                name.Content = sc.name.Replace("-", " ");
-                name.FontWeight = FontWeights.Bold;
-                name.FontFamily = new FontFamily("Open Sans");
+                name.Content = sc.Replace("-", " ");
+                name.FontWeight = Utils.weightFont;
+                name.FontFamily = Utils.appFont;
                 name.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 name.FontSize = 24;
                 name.Foreground = Utils.getColor(Utils.white);
 
-                System.Drawing.Bitmap bmpDel = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("delete"); ;
                 Image imgDel = new Image();
-                imgDel.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpDel.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                imgDel.Source = Utils.getImageSource(Properties.Resources.delete);
                 imgDel.Width = 24;
                 imgDel.Height = 24;
                 imgDel.Margin = new Thickness(5, 0, 5, 0);
@@ -69,13 +61,8 @@ namespace AutomateMyHome
                 imgDel.Tag = sc;
                 imgDel.MouseLeftButtonDown += imgDel_MouseLeftButtonDown;
 
-
-                System.Drawing.Bitmap bmpSetting = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("settings"); ;
                 Image imgSetting = new Image();
-                imgSetting.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpSetting.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                imgSetting.Source = Utils.getImageSource(Properties.Resources.settings);
                 imgSetting.Width = 24;
                 imgSetting.Height = 24;
                 // imgSetting.Margin = new Thickness(5, 5, 5, 5);
@@ -107,26 +94,22 @@ namespace AutomateMyHome
             DockPanel add = new DockPanel();
             add.Background = Utils.getColor(Utils.lightBlue);
             add.Margin = new Thickness(10, 10, 10, 0);
-
-
-            System.Drawing.Bitmap bmpPlus = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("Plus"); ;
+            Button btnPlus = new Button();
             Image imgPlus = new Image();
-            imgPlus.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpPlus.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
-            add.MouseLeftButtonDown += add_MouseLeftButtonDown;
-
+            imgPlus.Source = Utils.getImageSource(Properties.Resources.Plus);
             imgPlus.Width = 32;
             imgPlus.Height = 32;
             imgPlus.Margin = new Thickness(10, 10, 10, 10);
             imgPlus.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             add.Background = Utils.getColor(Utils.green);
-            add.Children.Add(imgPlus);
+            btnPlus.Content = imgPlus;
+            btnPlus.Background = Utils.getColor(Utils.green);
+            btnPlus.Click += btnPlus_Click;
+            add.Children.Add(btnPlus);
             this.Children.Add(add);
         }
 
-        void add_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void btnPlus_Click(object sender, RoutedEventArgs e)
         {
             Scenario sc = new Scenario();
             sc.initName(client);
@@ -150,12 +133,12 @@ namespace AutomateMyHome
 
         void imgSetting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ScenarioEditor sce = new ScenarioEditor(client, (Scenario)((Image)sender).Tag);
+            ScenarioEditor sce = new ScenarioEditor(client, new Scenario((String)((Image)sender).Tag,Scenario.getCodes(client,(String)((Image)sender).Tag + ".sh")));
             sce.ShowDialog();
             if ((bool)sce.DialogResult)
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                this.client.RunCommand("rm HomeConnector/profils/" + ((Scenario)((Image)sender).Tag).name + ".sh");
+                this.client.RunCommand("rm HomeConnector/profils/" + (String)((Image)sender).Tag + ".sh");
                 this.client.RunCommand("touch HomeConnector/profils/" + ((Scenario)(sce.Tag)).name + ".sh");
 
                 foreach (string s in ((Scenario)(sce.Tag)).codes)
@@ -174,8 +157,8 @@ namespace AutomateMyHome
         {
             Mouse.OverrideCursor = Cursors.Wait;
 
-            Event.deleteAllEventWhoContainsThatScenario(((Scenario)((Image)sender).Tag).name,client);
-            this.client.RunCommand("rm HomeConnector/profils/" + ((Scenario)((Image)sender).Tag).name + ".sh");
+            Event.deleteAllEventWhoContainsThatScenario(((String)((Image)sender).Tag),client);
+            this.client.RunCommand("rm HomeConnector/profils/" + (String)((Image)sender).Tag + ".sh");
             InitialyzeProfils();
             InitialyzeProfils();
             Mouse.OverrideCursor = Cursors.Arrow;
@@ -184,7 +167,7 @@ namespace AutomateMyHome
 
         void imgStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Scenario s = (Scenario)((Image)sender).Tag;
+            Scenario s = new Scenario((String)((Image)sender).Tag,null);
             s.launch(client);
         }
 

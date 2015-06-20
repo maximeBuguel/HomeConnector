@@ -32,12 +32,7 @@ namespace AutomateMyHome
             client = c;
             commande = c.CreateCommand("sudo ./HomeConnector/GetNextSignal");
             commande.BeginExecute(new AsyncCallback(cb));
-            System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("signal"); ;
-            img.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp1.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
-            
+            img.Source = Utils.getImageSource(Properties.Resources.signal);
             this.Closing += SignalSeeker_Closing;
            // img.Width = 40;
            // img.Height = 40;
@@ -90,16 +85,12 @@ namespace AutomateMyHome
         private void BadCodeReceived()
         {
             button.Content = "close";
-            System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("error"); ;
-            img.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp1.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            
+            img.Source = Utils.getImageSource(Properties.Resources.error);
 
             textInfo.Content = "Code already used !!";
-            textInfo.FontFamily = new FontFamily("Open sans");
-            BrushConverter bc = new BrushConverter();
-            textInfo.Foreground = (Brush)bc.ConvertFrom("#BD1D49");
+            textInfo.FontFamily = Utils.appFont;
+            textInfo.Foreground = Utils.getColor(Utils.red);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

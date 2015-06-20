@@ -4,40 +4,40 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="AutomateMyHome.MainWindow"
                       Title="Home Connector" Height="auto" Width="auto" MinWidth="500"
-                      Icon="/Ressources/logoHCBleu.png" d:DesignHeight="516"
+                      Icon="Resources/logoHCBleu.png" d:DesignHeight="516"
                       
                        >
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" Background="#41B1E1">
             <Image Name="logo" Height="100" Width="100" HorizontalAlignment="Right" Margin="5,5,0,5" />
-            <Label Name="TitleLabel" Content="" HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="Open Sans" FontSize="36" FontWeight="Bold" Foreground="White"/>
+            <Label Name="TitleLabel" Content="" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="36" FontWeight="Light" Foreground="White"/>
         </DockPanel>
 
         <Rectangle DockPanel.Dock="Bottom" Height="25" Fill="#41B1E1" ></Rectangle>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Name="menuPanel" DockPanel.Dock="Left" Background="#41B1E1" Visibility="Collapsed">
-                <Button Name="homeBtn" DockPanel.Dock="Left" Width="100" Height="50" Click="Button_Click" Margin="5,0,5,5" BorderThickness="0" FontFamily="Open Sans"  >Home</Button>
-                <Button Name="actionBtn" DockPanel.Dock="Left" Width="100" Height="50" Click="actionBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans" >Profil</Button>
-                <Button Name="eventBtn" DockPanel.Dock="Left" Width="100" Height="50" Click="eventBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans" >Event</Button>
-                <Button Name="settingBtn" DockPanel.Dock="Left" Width="100" Height="50" Click="settingBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans">Setting</Button>
-                <Button Name="disconectBtn" DockPanel.Dock="Left" Width="100" Height="50" Click="disconectBtn_Click"  Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans">Disconect</Button>
+                <Button Name="homeBtn" DockPanel.Dock="Left" Width="100" Click="Button_Click" Margin="5,0,5,5" BorderThickness="0" FontFamily="Open Sans"  >Home</Button>
+                <Button Name="actionBtn" DockPanel.Dock="Left" Width="100" Click="actionBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans" >Profil</Button>
+                <Button Name="eventBtn" DockPanel.Dock="Left" Width="100" Click="eventBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans" >Event</Button>
+                <Button Name="settingBtn" DockPanel.Dock="Left" Width="100"  Click="settingBtn_Click" Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans">Setting</Button>
+                <Button Name="disconectBtn" DockPanel.Dock="Left" Width="100"  Click="disconectBtn_Click"  Margin="0,0,0,5" BorderThickness="0" FontFamily="Open Sans">Disconect</Button>
             </StackPanel>
         </ScrollViewer>
-        
+
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Name="tabPanel" Visibility="Collapsed" Background="#2f4f4f">
             </StackPanel>
         </ScrollViewer >
 
-        
-        
+
+
         <StackPanel Name="loginPanel" Background="#2f4f4f">
-            <Label Name="ipLbl" Foreground="#FFFFFF"  Width="150" Height="25" TextElement.FontSize="14" Margin="0,100,0,5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Open Sans" >IP</Label>
-            <TextBox  Name="ipTxtBox" Width="150" TextAlignment="Center" Margin="0,0,0,5"></TextBox>
-            <Label Name="pwdLbl" Foreground="#FFFFFF" Width="150" Height="25" TextElement.FontSize="14" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,5" FontFamily="Open Sans">Password</Label>
-            <PasswordBox Name="pwdTxtBox" Width="150" HorizontalContentAlignment="Center" Margin="0,0,0,5" ></PasswordBox>
-            <Button Name="loginBtn" Width="150" Height="30" HorizontalAlignment="Center" Margin="0,0,0,5" Click="loginBtn_Click" FontFamily="Open Sans">Connect</Button>
-            <Label Name="errLbl" Width="150" Height="25" TextElement.FontSize="14" Margin="0,0,0,5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Visibility="Hidden" TextElement.Foreground="#B64741" FontWeight="Bold" >IP/Password incorect</Label>
+            <Label x:Name="ipLbl" Foreground="#FFFFFF"  Width="200"  TextElement.FontSize="14" Margin="0,100,0,5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Thin" FontSize="22" Content="IP" />
+            <TextBox  x:Name="ipTxtBox" Width="200" TextAlignment="Center" Margin="0,0,0,5" FontSize="22"/>
+            <Label x:Name="pwdLbl" Foreground="#FFFFFF" Width="200"  TextElement.FontSize="14" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,5" FontWeight="Thin" FontSize="22" Content="Password"/>
+            <PasswordBox x:Name="pwdTxtBox" Width="200" HorizontalContentAlignment="Center" Margin="0,0,0,5" FontSize="22" />
+            <Button x:Name="loginBtn" Width="200"  HorizontalAlignment="Center" Margin="0,0,0,5" Click="loginBtn_Click" FontFamily="Segoe UI" Content="Connect" FontSize="22" FontWeight="Thin"/>
+            <Label x:Name="errLbl" Width="200"  TextElement.FontSize="14" Margin="0,0,0,5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Visibility="Hidden" TextElement.Foreground="#B64741" FontWeight="Thin" Content="IP/Password incorect" FontSize="22" />
             <StackPanel Height="100" Width="100"/>
         </StackPanel>
 

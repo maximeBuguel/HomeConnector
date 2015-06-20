@@ -34,8 +34,8 @@ namespace AutomateMyHome
             this.client = c;
             this.type = s;
             nameBox = new TextBox();
-            nameBox.FontFamily = new FontFamily("Open Sans");
-            nameBox.FontWeight = FontWeights.Bold;
+            nameBox.FontFamily = Utils.appFont;
+            nameBox.FontWeight = Utils.weightFont;
             nameBox.Foreground = Utils.getColor(Utils.white);
             nameBox.Background = Utils.getColor(Utils.lightBlue);
             nameBox.FontSize = 24;
@@ -44,15 +44,15 @@ namespace AutomateMyHome
             nameBox.Margin = new Thickness(10, 10, 10, 10);
             mainPanel.Children.Add(nameBox);
             Label roomLabel = new Label();
-            roomLabel.FontFamily = new FontFamily("Open Sans");
-            roomLabel.FontWeight = FontWeights.Bold;
+            roomLabel.FontFamily = Utils.appFont;
+            roomLabel.FontWeight = Utils.weightFont;
             roomLabel.Foreground = Utils.getColor(Utils.white);
             roomLabel.Background = Utils.getColor(Utils.lightBlue);
             roomLabel.FontSize = 24;
             roomLabel.Content = "Room :";
             roomBox = new TextBox();
-            roomBox.FontFamily = new FontFamily("Open Sans");
-            roomBox.FontWeight = FontWeights.Bold;
+            roomBox.FontFamily = Utils.appFont;
+            roomBox.FontWeight = Utils.weightFont;
             roomBox.Foreground = Utils.getColor(Utils.lightBlue);
             roomBox.Background = Utils.getColor(Utils.white);
             roomBox.FontSize = 24;
@@ -64,18 +64,18 @@ namespace AutomateMyHome
             mainPanel.Children.Add(roomPanel);
             DockPanel nbFreqPanel = new DockPanel();
             Label freqLabel = new Label();
-            freqLabel.FontFamily = new FontFamily("Open Sans");
-            freqLabel.FontWeight = FontWeights.Bold;
+            freqLabel.FontFamily = Utils.appFont;
+            freqLabel.FontWeight = Utils.weightFont;
             freqLabel.Foreground = Utils.getColor(Utils.white);
             freqLabel.Background = Utils.getColor(Utils.lightBlue); ;
             freqLabel.FontSize = 24;
             freqLabel.Content = "Type :";
             ComboBoxItem cbi1 = new ComboBoxItem();
-            cbi1.FontFamily = new FontFamily("Open Sans");
+            cbi1.FontFamily = Utils.appFont;
             cbi1.FontSize = 24;
             cbi1.Content = "Toggle";
             ComboBoxItem cbi2 = new ComboBoxItem();
-            cbi2.FontFamily = new FontFamily("Open Sans");
+            cbi2.FontFamily = Utils.appFont;
             cbi2.FontSize = 24;
             cbi2.Content = "On/Off";
             List<ComboBoxItem> cbL = new List<ComboBoxItem>();
@@ -93,27 +93,24 @@ namespace AutomateMyHome
             mainPanel.Children.Add(nbFreqPanel);
 
             Label toggleLabel = new Label();
-            toggleLabel.FontFamily = new FontFamily("Open Sans");
-            toggleLabel.FontWeight = FontWeights.Bold;
+            toggleLabel.FontFamily = Utils.appFont;
+            toggleLabel.FontWeight = Utils.weightFont;
             toggleLabel.Foreground = Utils.getColor(Utils.white);
             toggleLabel.Background = Utils.getColor(Utils.lightBlue); 
             toggleLabel.FontSize = 24;
             toggleLabel.Content = "Button 1 :";
             freq1Box = new TextBox();
-            freq1Box.FontFamily = new FontFamily("Open Sans");
-            freq1Box.FontWeight = FontWeights.Bold;
+            freq1Box.FontFamily = Utils.appFont;
+            freq1Box.FontWeight = Utils.weightFont;
             freq1Box.Foreground = Utils.getColor(Utils.lightBlue);
             freq1Box.Background = Utils.getColor(Utils.white);
             freq1Box.FontSize = 24;
             freq1Box.Width = 150;
             freq1Box.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
 
-            System.Drawing.Bitmap bmpSetting = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("settingsB"); ;
+            System.Drawing.Bitmap bmpSetting = (System.Drawing.Bitmap)Properties.Resources.settingsB;
             Image imgSetting = new Image();
-            imgSetting.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpSetting.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgSetting.Source = Utils.getImageSource(bmpSetting);
             imgSetting.Width = 24;
             imgSetting.Height = 24;
             // imgSetting.Margin = new Thickness(5, 5, 5, 5);
@@ -133,15 +130,15 @@ namespace AutomateMyHome
             mainPanel.Children.Add(freq1Panel);
 
             Label onOffLabel = new Label();
-            onOffLabel.FontFamily = new FontFamily("Open Sans");
-            onOffLabel.FontWeight = FontWeights.Bold;
+            onOffLabel.FontFamily = Utils.appFont;
+            onOffLabel.FontWeight = Utils.weightFont;
             onOffLabel.Foreground = Utils.getColor(Utils.white);
             onOffLabel.Background = Utils.getColor(Utils.lightBlue);
             onOffLabel.FontSize = 24;
             onOffLabel.Content = "Button 2 :";
             freq2Box = new TextBox();
-            freq2Box.FontFamily = new FontFamily("Open Sans");
-            freq2Box.FontWeight = FontWeights.Bold;
+            freq2Box.FontFamily = Utils.appFont;
+            freq2Box.FontWeight = Utils.weightFont;
             freq2Box.Foreground = Utils.getColor(Utils.lightBlue);
             freq2Box.Background = Utils.getColor(Utils.white);
             freq2Box.FontSize = 24;
@@ -153,10 +150,7 @@ namespace AutomateMyHome
             freq2Panel.Children.Add(freq2Box);
             WrapPanel imgPanel2 = new WrapPanel();
             Image imgSetting2 = new Image();
-            imgSetting2.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpSetting.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgSetting2.Source = Utils.getImageSource(bmpSetting);
             imgSetting2.Width = 24;
             imgSetting2.Height = 24;
             imgSetting2.Tag = freq2Box;
@@ -175,23 +169,15 @@ namespace AutomateMyHome
             btns.Margin = new Thickness(10, 10, 10, 0);
             btns.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
 
-            System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("ok"); ;
             Image img1 = new Image();
-            img1.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp1.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img1.Source = Utils.getImageSource(Properties.Resources.ok);
             img1.Width = 40;
             img1.Height = 40;
             img1.MouseLeftButtonDown += img1_MouseLeftButtonDown;
             btns.Children.Add(img1);
 
-            System.Drawing.Bitmap bmp2 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("cancel"); ;
             Image img2 = new Image();
-            img2.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp2.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img2.Source = Utils.getImageSource(Properties.Resources.cancel);
             img2.Width = 40;
             img2.Height = 40;
             img2.MouseLeftButtonDown += img2_MouseLeftButtonDown;

@@ -22,7 +22,7 @@ namespace AutomateMyHome
     /// </summary>
     public partial class EventEditor : MetroWindow
     {
-        public EventEditor(List<Scenario> scenarioList,SshClient client,Event ev)
+        public EventEditor(List<String> scenarioList,SshClient client,Event ev)
         {
             InitializeComponent();
 
@@ -44,8 +44,7 @@ namespace AutomateMyHome
 
             
             DockPanel dp = new DockPanel();
-            BrushConverter bc = new BrushConverter();
-            dp.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            dp.Background = Utils.getColor(Utils.lightBlue);
             dp.Margin = new Thickness(10, 10, 10, 0);
 
 
@@ -61,25 +60,16 @@ namespace AutomateMyHome
             btns.Margin = new Thickness(10, 10, 10, 0);
             btns.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
 
-            System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("ok"); ;
+            
             Image img1 = new Image();
-            img1.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp1.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img1.Source = Utils.getImageSource(Properties.Resources.ok);
             img1.Width = 40;
             img1.Height = 40;
             img1.MouseLeftButtonDown += img1_MouseLeftButtonDown;
             img1.Tag = new specialObjectForButtonSender(client, comboList,ev);
             btns.Children.Add(img1);
-
-           
-            System.Drawing.Bitmap bmp2 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("cancel"); ;
             Image img2 = new Image();
-            img2.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp2.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img2.Source = Utils.getImageSource(Properties.Resources.cancel);
             img2.Width = 40;
             img2.Height = 40;
             img2.MouseLeftButtonDown += img2_MouseLeftButtonDown;
@@ -90,14 +80,14 @@ namespace AutomateMyHome
         private void addToDockPanel(String comboName,ComboBox combo){
             DockPanel dp = new DockPanel();
             BrushConverter bc = new BrushConverter();
-            dp.Background = (Brush)bc.ConvertFrom("#41B1E1");
+            dp.Background = Utils.getColor(Utils.lightBlue);
             dp.Margin = new Thickness(10, 10, 10, 0);           
             Label name = new Label();
-            name.FontFamily = new FontFamily("Open Sans");
-            name.FontWeight = FontWeights.Bold;
+            name.FontFamily = Utils.appFont;
+            name.FontWeight = Utils.weightFont;
             name.Content = comboName;
             name.FontSize = 24;
-            name.Foreground = (Brush)bc.ConvertFrom("#FFFFFF");
+            name.Foreground = Utils.getColor(Utils.white);
             dp.Children.Add(name);
             dp.Children.Add(combo);
             mainPanel.Children.Add(dp);
@@ -173,25 +163,25 @@ namespace AutomateMyHome
                 
             }
             BrushConverter bc = new BrushConverter();
-            combo.FontFamily = new FontFamily("Open Sans");
+            combo.FontFamily = Utils.appFont;
             combo.FontSize = 24;
-            combo.Foreground = (Brush)bc.ConvertFrom("#41B1E1");
+            combo.Foreground = Utils.getColor(Utils.lightBlue);
             comboList.Add(combo);
 
 
         }
 
-        private void addAllScenarioToCombobox(ComboBox combo, List<Scenario> scenarioList, List<ComboBox> comboList)
+        private void addAllScenarioToCombobox(ComboBox combo, List<String> scenarioList, List<ComboBox> comboList)
         {
             combo.SelectedIndex = 0;
-            foreach (Scenario sc in scenarioList)
+            foreach (String sc in scenarioList)
             {
-                combo.Items.Add(sc.name.Replace("-", " "));
+                combo.Items.Add(sc.Replace("-", " "));
             }
             BrushConverter bc = new BrushConverter();
-            combo.FontFamily = new FontFamily("Open Sans");
+            combo.FontFamily = Utils.appFont;
             combo.FontSize = 24;
-            combo.Foreground = (Brush)bc.ConvertFrom("#41B1E1");
+            combo.Foreground = Utils.getColor(Utils.lightBlue);
             comboList.Add(combo);
             
         }

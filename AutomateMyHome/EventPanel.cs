@@ -29,7 +29,8 @@ namespace AutomateMyHome
             this.Width = this.Width - 110;
             this.Background = Utils.getColor(Utils.darkBlue);
             //evList.Add(new Event());
-            List<Scenario> senarios = Scenario.getScenarios(this.client);
+            List<String> senarios = Scenario.getScenariosNames(this.client);
+            
             foreach (Event ev in evList)
             {
 
@@ -39,30 +40,21 @@ namespace AutomateMyHome
 
 
                 Label name = new Label();
-                name.FontWeight = FontWeights.Bold;
-                name.FontFamily = new FontFamily("Open Sans");
+                name.FontWeight = Utils.weightFont;
+                name.FontFamily = Utils.appFont;
                 name.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 name.FontSize = 24;
                 name.Foreground = Utils.getColor(Utils.white);
-
-                System.Drawing.Bitmap bmpDel = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("delete"); ;
                 Image imgDel = new Image();
-                imgDel.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpDel.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                imgDel.Source = Utils.getImageSource(Properties.Resources.delete);
                 imgDel.Width = 24;
                 imgDel.Height = 24;
                 imgDel.Margin = new Thickness(5, 0, 5, 0);
                 imgDel.Cursor = Cursors.Hand;
                 imgDel.Tag = ev;
                 imgDel.MouseLeftButtonDown += imgEventDel_MouseLeftButtonDown;
-                System.Drawing.Bitmap bmpSetting = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("settings"); ;
                 Image imgSetting = new Image();
-                imgSetting.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpSetting.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                imgSetting.Source = Utils.getImageSource(Properties.Resources.settings);
                 imgSetting.Width = 24;
                 imgSetting.Height = 24;
                 // imgSetting.Margin = new Thickness(5, 5, 5, 5);
@@ -92,32 +84,31 @@ namespace AutomateMyHome
             DockPanel add = new DockPanel();
             add.Background = Utils.getColor(Utils.lightBlue);
             add.Margin = new Thickness(10, 10, 10, 0);
-            System.Drawing.Bitmap bmpPlus = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("Plus"); ;
+            Button btnPlus = new Button();
             Image imgPlus = new Image();
-            imgPlus.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpPlus.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            imgPlus.Source = Utils.getImageSource(Properties.Resources.Plus);
             imgPlus.Width = 32;
             imgPlus.Height = 32;
             imgPlus.Margin = new Thickness(10, 10, 10, 10);
             imgPlus.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-            add.Tag = senarios;
-            add.MouseLeftButtonDown += imgPlus_MouseLeftDown;
+            btnPlus.Tag = senarios;
+            btnPlus.Content = imgPlus;
+            btnPlus.Background = Utils.getColor(Utils.green);
+            btnPlus.Click += btnPlus_Click;
             add.Background = Utils.getColor(Utils.green); ;
-            add.Children.Add(imgPlus);
+            add.Children.Add(btnPlus);
             this.Children.Add(add);
 
         }
 
-        private void imgPlus_MouseLeftDown(object sender, MouseButtonEventArgs e)
+        void btnPlus_Click(object sender, RoutedEventArgs e)
         {
-            List<Scenario> se = (List<Scenario>)((DockPanel)sender).Tag;
+            List<String> se = (List<String>)((Button)sender).Tag;
             EventEditor Ee = new EventEditor(se, this.client, new Event());
             Ee.ShowDialog();
             if ((bool)Ee.DialogResult)
             {
-                    InitializeEventList();
+                InitializeEventList();
             }
         }
 

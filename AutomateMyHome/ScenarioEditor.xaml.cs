@@ -32,8 +32,8 @@ namespace AutomateMyHome
             output = "";
             InitializeComponent();
             nameBox = new TextBox();
-            nameBox.FontFamily = new FontFamily("Open Sans");
-            nameBox.FontWeight = FontWeights.Bold;
+            nameBox.FontFamily = Utils.appFont;
+            nameBox.FontWeight = Utils.weightFont;
             nameBox.Foreground = Utils.getColor(Utils.white);
             nameBox.Background = Utils.getColor(Utils.lightBlue);
             nameBox.FontSize = 24;
@@ -52,32 +52,27 @@ namespace AutomateMyHome
                 dp.Background = Utils.getColor(Utils.lightBlue);
                 dp.Margin = new Thickness(10, 10, 10, 0);
                 
-
-                System.Drawing.Bitmap bmp = rc.getIcon();
                 Image img = new Image();
-                img.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(),
-                    IntPtr.Zero,
-                    System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(100, 100));
+                img.Source = Utils.getImageSource(rc.getIcon());
                 img.Width = 30;
                 img.Height = 30;
 
                 Label name = new Label();
-                name.FontFamily = new FontFamily("Open Sans");
-                name.FontWeight = FontWeights.Bold;
+                name.FontFamily = Utils.appFont;
+                name.FontWeight = Utils.weightFont;
                 name.Content = rc.Name;
                 name.FontSize = 24;
                 name.Foreground = Utils.getColor(Utils.white);
 
                 Label roomName = new Label();
-                roomName.FontFamily = new FontFamily("Open Sans");
+                roomName.FontFamily = Utils.appFont;
                 roomName.Content = "- " + rc.Room.Name;
                 roomName.FontSize = 24;
                 roomName.Foreground = Utils.getColor(Utils.white);
                 List<ComboBoxItem> listCb = new List<ComboBoxItem>();
 
                 ComboBoxItem cbi = new ComboBoxItem();
-                cbi.FontFamily = new FontFamily("Open Sans");
+                cbi.FontFamily = Utils.appFont;
                 cbi.FontSize = 24;
                 cbi.Content = "Do nothing";
 
@@ -87,26 +82,26 @@ namespace AutomateMyHome
                 if (rc.twoFrequencies)
                 {
                     cbi = new ComboBoxItem();
-                    cbi.FontFamily = new FontFamily("Open Sans");
+                    cbi.FontFamily = Utils.appFont;
                     cbi.FontSize = 24;
                     cbi.Content = "Turn on";
                     cbi.Foreground = Utils.getColor(Utils.green);
                     listCb.Add(cbi);
 
                     cbi = new ComboBoxItem();
-                    cbi.FontFamily = new FontFamily("Open Sans");
+                    cbi.FontFamily = Utils.appFont;
                     cbi.FontSize = 24;
                     cbi.Content = "Turn off";
-                    cbi.Foreground = Utils.getColor(Utils.green);
+                    cbi.Foreground = Utils.getColor(Utils.red);
                     listCb.Add(cbi);
                 }
                 else
                 {
                     cbi = new ComboBoxItem();
-                    cbi.FontFamily = new FontFamily("Open Sans");
+                    cbi.FontFamily = Utils.appFont;
                     cbi.FontSize = 24;
                     cbi.Content = "Toggle";
-                    cbi.Foreground = (Brush)bc.ConvertFrom("#5e3ab8");
+                    cbi.Foreground = Utils.getColor(Utils.purple);
                     listCb.Add(cbi);
                 }
                 
@@ -139,12 +134,8 @@ namespace AutomateMyHome
             btns.Margin = new Thickness(10, 10, 10, 0);
             btns.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
 
-            System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("ok"); ;
             Image img1 = new Image();
-            img1.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp1.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img1.Source = Utils.getImageSource(Properties.Resources.ok);
             img1.Width = 40;
             img1.Height = 40;
             img1.MouseLeftButtonDown += img1_MouseLeftButtonDown;
@@ -152,12 +143,8 @@ namespace AutomateMyHome
 
             btns.Children.Add(img1);
 
-            System.Drawing.Bitmap bmp2 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("cancel"); ;
             Image img2 = new Image();
-            img2.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmp2.GetHbitmap(),
-                IntPtr.Zero,
-                System.Windows.Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(100, 100));
+            img2.Source = Utils.getImageSource(Properties.Resources.cancel);
             img2.Width = 40;
             img2.Height = 40;
             img2.MouseLeftButtonDown += img2_MouseLeftButtonDown;

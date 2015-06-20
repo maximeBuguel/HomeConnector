@@ -75,6 +75,7 @@
     <Compile Include="EventPanel.cs" />
     <Compile Include="HomePanel.cs" />
     <Compile Include="JSONReceptor.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="ProfilsPanel.cs" />
     <Compile Include="Receptor.cs" />
     <Compile Include="ReceptorAdder.xaml.cs">
@@ -149,29 +150,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ressources\homeconnector.png" />
+    <Resource Include="Resources\homeconnector.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ressources\logoHCBleu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Ressources\lampBlack.png" />
-    <Resource Include="Ressources\lampBlue.png" />
+    <Resource Include="Resources\logoHCBleu.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Bright_lightbulb_256.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\I.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\IO.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\o.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Cancel_icon_32.png" />
@@ -204,16 +192,7 @@
     <None Include="Resources\logoHome.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ressources\logoHome.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Voice_microphone_symbol_256.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Bright_lightbulb_2561.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Plug_with_Cord_2561.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Bright_lightbulb_256_plus.png" />
@@ -230,6 +209,34 @@
   <ItemGroup>
     <None Include="Resources\Delete_button_256.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\House_outline_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screwdriver_and_wrench_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Opened_door_aperture_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Event_date_and_time_symbol_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\list_of_files_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Home_256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\I.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\o.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
