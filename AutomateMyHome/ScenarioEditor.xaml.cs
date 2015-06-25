@@ -25,6 +25,10 @@ namespace AutomateMyHome
         public string output { get; set; }
         TextBox nameBox;
         SshClient client;
+
+        /// <summary>
+        /// Create a new ScenarioEdior, load the nameBox and comboBox value from the Scenario Sc 
+        /// </summary>
         public ScenarioEditor(SshClient client,Scenario sc)
         {
             this.Tag = sc;
@@ -155,6 +159,9 @@ namespace AutomateMyHome
             nameBox.Focus();
         }
 
+        /// <summary>
+        /// Funtion wich block the char '-' in the nameBox
+        /// </summary>
         void nameBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.D6 || (e.Key == Key.Subtract))
@@ -163,6 +170,10 @@ namespace AutomateMyHome
             }
         }
 
+
+        /// <summary>
+        /// Save modifications made / add new Scenario
+        /// </summary>
         void img1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if ((((Scenario)this.Tag).name.Equals(nameBox.Text.Replace(" ", "-"))) || (Scenario.canCreate(client, nameBox.Text.Replace(" ", "-") + ".sh") && !nameBox.Text.Equals("")))
@@ -201,6 +212,9 @@ namespace AutomateMyHome
             
         }
 
+        /// <summary>
+        /// Cancel modifications made / cancel add new Scenario
+        /// </summary>
         void img2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DialogResult = false;

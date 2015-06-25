@@ -28,6 +28,9 @@ namespace AutomateMyHome
         SshClient client;
         ComboBox cb;
         String type;
+        /// <summary>
+        /// Create a new windows to add new receptors
+        /// </summary>
         public ReceptorAdder(SshClient c, String s)
         {
             InitializeComponent();
@@ -186,16 +189,20 @@ namespace AutomateMyHome
 
             mainPanel.Children.Add(btns);
         }
-
+        /// <summary>
+        /// Close the windows on cancel button
+        /// </summary>
         private void img2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Cancel
             this.Close();
         }
 
+        /// <summary>
+        /// Send the code 1 of a receptor (often the turn On)
+        /// </summary>
         private void img1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-        //OK
             String name = nameBox.Text;
             String roomName = roomBox.Text;
             String F1;
@@ -224,11 +231,14 @@ namespace AutomateMyHome
                 Receptor r = new Receptor(name, room, twoFrequencies, F1, F2, client, type);
                 receps.Add(r);
                 Receptor.refresh(client, receps);
+                this.DialogResult = true;
                 this.Close();
             }
             
         }
-
+        /// <summary>
+        /// Start the seeking signal window 
+        /// </summary>
         void imgSetting_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             TextBox tb = (TextBox)((Image)sender).Tag;
@@ -237,15 +247,14 @@ namespace AutomateMyHome
             if ((bool)sngSeeker.DialogResult)
             {
                 tb.Text = (String) sngSeeker.Tag;
-
-                Console.WriteLine((String)sngSeeker.Tag);
             }
 
-            Console.WriteLine((String)sngSeeker.Tag);
         }
 
-     
 
+        /// <summary>
+        /// Add a new signal if the combo box change from toggle to 2 frequencies
+        /// </summary>
         void cb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cb = (ComboBox)sender;

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AutomateMyHome
 {
+    /// <summary>
+    /// This class is use to parse easily the list of receptors
+    /// </summary
     class JSONReceptor
     {
         public String name { get; set; }
@@ -15,6 +18,10 @@ namespace AutomateMyHome
         public String type { get; set; }
         public String room { get; set; }
 
+/// <summary>
+/// Cast a Receptor into a JSONRECEPTOR
+/// </summary>
+/// <param name="r"> Recepector to copy</param>
         public JSONReceptor(Receptor r)
         {
             this.name = r.Name;

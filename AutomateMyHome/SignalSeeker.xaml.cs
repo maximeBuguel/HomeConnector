@@ -26,6 +26,10 @@ namespace AutomateMyHome
         SshCommand commande;
         SshClient client;
         private Image b;
+
+        /// <summary>
+        /// Create a signal seeker and launch the programme on the box to scan the next code
+        /// </summary>
         public SignalSeeker(SshClient c)
         {
             InitializeComponent();
@@ -33,22 +37,15 @@ namespace AutomateMyHome
             commande = c.CreateCommand("sudo ./HomeConnector/GetNextSignal");
             commande.BeginExecute(new AsyncCallback(cb));
             img.Source = Utils.getImageSource(Properties.Resources.signal);
-            this.Closing += SignalSeeker_Closing;
-           // img.Width = 40;
-           // img.Height = 40;
             
         }
 
-        void SignalSeeker_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //this.DialogResult = false;
-        }
-
+        /// <summary>
+        /// CallBack function called when the Box Sniffer programme is over
+        /// </summary>
         void cb(IAsyncResult result)
         {
-            Console.WriteLine(commande.Result);
             
-            //this.Close();
             System.Drawing.Bitmap bmp1 = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject("signal"); ;
             List<Receptor> rcs = Receptor.getReceptors(client,new List<Room>());
             bool alreadyExist = false;
@@ -63,8 +60,10 @@ namespace AutomateMyHome
                 iterator.MoveNext();
             }
             Delegate myDelegate;
-
-            if (!alreadyExist)
+            if(commande.Result.Equals("-1")){
+                myDelegate = (Action)DelayPassedReceived;
+            }
+            else if (!alreadyExist )
             {
                 myDelegate = (Action)GoodCodeReceived;
 
@@ -75,6 +74,7 @@ namespace AutomateMyHome
                 
             }
             this.Dispatcher.Invoke(DispatcherPriority.Normal, myDelegate);
+            
         }
         private void GoodCodeReceived()
         {
@@ -89,6 +89,20 @@ namespace AutomateMyHome
             img.Source = Utils.getImageSource(Properties.Resources.error);
 
             textInfo.Content = "Code already used !!";
+            textInfo.FontFamily = Utils.appFont;
+            textInfo.Foreground = Utils.getColor(Utils.red);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DelayPassedReceived()
+        {
+            button.Content = "close";
+
+            img.Source = Utils.getImageSource(Properties.Resources.error);
+
+            textInfo.Content = "No signal received  !!";
             textInfo.FontFamily = Utils.appFont;
             textInfo.Foreground = Utils.getColor(Utils.red);
         }

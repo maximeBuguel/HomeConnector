@@ -13,14 +13,19 @@ namespace AutomateMyHome
 {
     public class SettingPanel : StackPanel
     {
-        public SshClient client { get; set; }
-        public SettingPanel (SshClient c)
+    public SshClient client { get; set; }
+    /// <summary>
+    /// create the setting panel
+    /// </summary>
+    public SettingPanel (SshClient c)
 	{
             this.client = c;
             
            
 	}
-
+    /// <summary>
+    /// Send the code 1 of a receptor (often the turn On)
+    /// </summary>
         public void InitialyzeSettingPanel()
         {
             this.Children.Clear();
@@ -169,6 +174,9 @@ namespace AutomateMyHome
             this.Children.Add(removePanel);
         }
 
+        /// <summary>
+        /// Remove the prise currently selected in the comboBox
+        /// </summary>
         void imgDel_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ComboBox cb = (ComboBox)((Image)sender).Tag;
@@ -181,36 +189,65 @@ namespace AutomateMyHome
             this.InitialyzeSettingPanel();
         }
 
+        /// <summary>
+        /// Show a new window to add a new plug 
+        /// </summary>
         private void addPlug_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ReceptorAdder ra = new ReceptorAdder(client,"Plug");
             ra.ShowDialog();
+            if ((bool)ra.DialogResult)
+            {
+                InitialyzeSettingPanel();
+            }
         }
 
+        /// <summary>
+        /// Show a new window to add a new Light 
+        /// </summary>
         private void addLight_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ReceptorAdder ra = new ReceptorAdder(client, "Light");
             ra.ShowDialog();
+            if ((bool)ra.DialogResult)
+            {               
+                InitialyzeSettingPanel();
+            }
         }
 
+        /// <summary>
+        /// Change the password of the box if the two passwordBox have the same content
+        /// </summary>
         void changePwdBtn_Click(object sender, RoutedEventArgs e)
         {
-            Object[] pwds = (Object[])((Button)sender).Tag;
-            PasswordBox pwd1 = (PasswordBox)pwds[0];
-            PasswordBox pwd2 = (PasswordBox)pwds[1];
-            Label returnLbl = (Label)pwds[2];
-            if (pwd1.Password == pwd2.Password && pwd1.Password != "")
+            try
             {
-                String cmdSt = "echo \"pi:" + pwd1.Password + "\" | sudo chpasswd ";
-                SshCommand cmd = client.RunCommand(cmdSt);
-                pwd1.Password = "";
-                pwd2.Password = "";
-                if (cmd.Result == "")
+                Object[] pwds = (Object[])((Button)sender).Tag;
+                PasswordBox pwd1 = (PasswordBox)pwds[0];
+                PasswordBox pwd2 = (PasswordBox)pwds[1];
+                Label returnLbl = (Label)pwds[2];
+                if (pwd1.Password == pwd2.Password && pwd1.Password != "")
                 {
-                    BrushConverter bc = new BrushConverter();
-                    returnLbl.Foreground = (Brush)bc.ConvertFrom("#00a11a"); ;
-                    returnLbl.Content = "Password changed";
-                    returnLbl.FontWeight = Utils.weightFont;
+                    String cmdSt = "echo \"pi:" + pwd1.Password + "\" | sudo chpasswd ";
+                    SshCommand cmd = client.RunCommand(cmdSt);
+                    pwd1.Password = "";
+                    pwd2.Password = "";
+                    if (cmd.Result == "")
+                    {
+                        BrushConverter bc = new BrushConverter();
+                        returnLbl.Foreground = (Brush)bc.ConvertFrom("#00a11a"); ;
+                        returnLbl.Content = "Password changed";
+                        returnLbl.FontWeight = Utils.weightFont;
+                    }
+                    else
+                    {
+                        BrushConverter bc = new BrushConverter();
+                        returnLbl.Foreground = (Brush)bc.ConvertFrom("#B64741");
+                        returnLbl.Content = "Could not change the password";
+                        returnLbl.FontWeight = Utils.weightFont;
+                    }
+                    pwd1.Password = "";
+                    pwd2.Password = "";
                 }
                 else
                 {
@@ -219,15 +256,10 @@ namespace AutomateMyHome
                     returnLbl.Content = "Could not change the password";
                     returnLbl.FontWeight = Utils.weightFont;
                 }
-                pwd1.Password = "";
-                pwd2.Password = "";
             }
-            else
+            catch
             {
-                BrushConverter bc = new BrushConverter();
-                returnLbl.Foreground = (Brush)bc.ConvertFrom("#B64741");
-                returnLbl.Content = "Could not change the password";
-                returnLbl.FontWeight = Utils.weightFont;
+                //Event client_ErrorOccurred
             }
 
         }

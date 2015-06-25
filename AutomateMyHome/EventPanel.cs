@@ -17,18 +17,25 @@ namespace AutomateMyHome
     public class EventPanel : StackPanel
     {
         public SshClient client { get; set; }
+
+        /// <summary>
+        /// add all the Event to the view 
+        /// </summary>
         public EventPanel(SshClient c)
         {
             this.client = c;
             InitializeEventList();
         }
+
+        /// <summary>
+        ///  get all events and create for each one the right visual form 
+        /// </summary>
         public void InitializeEventList()
         {
             this.Children.Clear();
             List<Event> evList = Event.getAllEvent(client);
             this.Width = this.Width - 110;
             this.Background = Utils.getColor(Utils.darkBlue);
-            //evList.Add(new Event());
             List<String> senarios = Scenario.getScenariosNames(this.client);
             
             foreach (Event ev in evList)
@@ -57,7 +64,6 @@ namespace AutomateMyHome
                 imgSetting.Source = Utils.getImageSource(Properties.Resources.settings);
                 imgSetting.Width = 24;
                 imgSetting.Height = 24;
-                // imgSetting.Margin = new Thickness(5, 5, 5, 5);
                 imgSetting.Cursor = Cursors.Hand;
                 imgSetting.Tag = new SpecialEventToSendEvAndScenario(senarios, ev);
                 imgSetting.MouseLeftButtonDown += imgEventSetting_MouseLeftDown;
@@ -75,7 +81,6 @@ namespace AutomateMyHome
                 }
                 dbutt.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                 dbutt.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-                //dp.Children.Add(imgStart);
                 dp.Children.Add(name);
                 DockPanel.SetDock(dbutt, Dock.Right);
                 dp.Children.Add(dbutt);
@@ -101,6 +106,9 @@ namespace AutomateMyHome
 
         }
 
+        /// <summary>
+        ///  launch the event editor to create an Event
+        /// </summary>
         void btnPlus_Click(object sender, RoutedEventArgs e)
         {
             List<String> se = (List<String>)((Button)sender).Tag;
@@ -112,6 +120,9 @@ namespace AutomateMyHome
             }
         }
 
+        /// <summary>
+        ///  launch the event editor to modify a specific event
+        /// </summary>
         void imgEventSetting_MouseLeftDown(object sender, MouseButtonEventArgs e)
         {
             SpecialEventToSendEvAndScenario se = (SpecialEventToSendEvAndScenario)((Image)sender).Tag;
@@ -125,6 +136,9 @@ namespace AutomateMyHome
             }
         }
 
+        /// <summary>
+        ///  remove an Event
+        /// </summary>
         void imgEventDel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Wait;

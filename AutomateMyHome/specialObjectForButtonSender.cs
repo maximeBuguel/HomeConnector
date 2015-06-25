@@ -13,8 +13,10 @@ namespace AutomateMyHome
         public SshClient Client { get; set; }
         public List<ComboBox> Combolist { get; set; }
         public Event Ev { get; set; }
-        
 
+        /// <summary>
+        ///  create an object to fill the tag of the icon linked to the modification of an existing event
+        /// </summary>
         public specialObjectForButtonSender(SshClient client, List<ComboBox> combolist,Event ev)
         {   this.Ev = ev;
             this.Combolist= combolist;

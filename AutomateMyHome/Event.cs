@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace AutomateMyHome
 
 {
-    public class Event
+        public class Event
     {
         public String Minutes { get; set; }
         public String Hour { get; set; }
@@ -21,13 +21,19 @@ namespace AutomateMyHome
         
         public SshClient client { get; set; }
         private static String fileName = "EventScriptCrontab.txt";
-        
-        
+
+
+        /// <summary>
+        /// Event default constructor 
+        /// </summary>
 
         public Event(){
             this.isACreator = true;
         }
 
+        /// <summary>
+        /// Event constructor for EventEditor
+        /// </summary>
         public Event(SshClient client,ArrayList comboBoxContentList){
             this.isACreator = false;
             this.client = client;
@@ -39,6 +45,9 @@ namespace AutomateMyHome
             this.DayOfTheWeek = getNumberFromString(comboBoxContentList[5].ToString());
         }
 
+        /// <summary>
+        /// Event copy constructor 
+        /// </summary>
         public Event(SshClient client, String minute, String hour,String day, String month, String dayOfTheWeek,String scenario){
             this.client = client;
             this.Scenario = scenario;
@@ -51,7 +60,9 @@ namespace AutomateMyHome
         }
 
 
-
+        /// <summary>
+        /// Get the right name to display it
+        /// </summary>
         public String getName()
         {
             String s = "";
@@ -60,6 +71,9 @@ namespace AutomateMyHome
             s = DayPartOfName(s);
             return s;
         }
+        /// <summary>
+        /// Get the first half of the event name displayed 
+        /// </summary>
         private string MinutePartOfName(String s)
         {
             if (this.Hour.Equals("*") && this.Minutes.Equals("*"))
@@ -97,6 +111,9 @@ namespace AutomateMyHome
             }
             return s;
         }
+        /// <summary>
+        /// Get the Second half of the event name displayed 
+        /// </summary>
         private String DayPartOfName(String s)
         {
             String rightMonth = giveToMonthTheRightName(this.Month);
@@ -141,6 +158,10 @@ namespace AutomateMyHome
             }
             return s;
         }
+
+        /// <summary>
+        /// add to the String number given the right suffix 
+        /// </summary>
         private String ChangeNumberInWord(String s)
         {
             String[] slits = s.Split();
@@ -177,6 +198,10 @@ namespace AutomateMyHome
             }
             return s;
         }
+
+        /// <summary>
+        /// add a 0 in front of a number if their is only one digit
+        /// </summary>
         public String addNumberIfSingle(String s)
         {
             if (s.Count() == 1)
@@ -185,6 +210,10 @@ namespace AutomateMyHome
             }
             return s;
         }
+
+        /// <summary>
+        /// change the string number,from 0 to 6, in his Equivalent day of the week word
+        /// </summary>
         private String getStringFromNumberDayOfTheWeek(string rightString)
         {
 
@@ -214,6 +243,10 @@ namespace AutomateMyHome
             }
             return rightString;
         }
+
+        /// <summary>
+        /// change the string number,from 1 to 12, in his Equivalent Month word
+        /// </summary>
         private string giveToMonthTheRightName(string s)
         {
             switch (s)
@@ -258,23 +291,54 @@ namespace AutomateMyHome
             return s;
         }
 
+
+        /// <summary>
+        /// add an event to the contrab file 
+        /// </summary>
         public void addToContrab(){
-            this.client.RunCommand("echo \"" + this.Minutes + " " + this.Hour + " " + this.Day + " " + this.Month + " " + DayOfTheWeek + " HomeConnector/profils/" + Scenario.Replace(' ', '-') + ".sh" + "\" | tee -a "+ fileName);
-            this.client.RunCommand("crontab " + fileName);
+            try
+            {
+                this.client.RunCommand("echo \"" + this.Minutes + " " + this.Hour + " " + this.Day + " " + this.Month + " " + DayOfTheWeek + " HomeConnector/profils/" + Scenario.Replace(' ', '-') + ".sh" + "\" | tee -a " + fileName);
+                this.client.RunCommand("crontab " + fileName);
+            }
+            catch
+            {
+                
+                //Event client_ErrorOccurred
+            }
         }
 
+        /// <summary>
+        /// suppress the corresponding line of this event in contrab file.
+        /// </summary>
         public void removeFromContrab()
         {
-            int line = getEventLineInContrabFile();
-            this.client.RunCommand("sed -i '"+ line +" d' "+ fileName);
-            this.client.RunCommand("crontab " + fileName);
+            try
+            {
+                int line = getEventLineInContrabFile();
+                this.client.RunCommand("sed -i '" + line + " d' " + fileName);
+                this.client.RunCommand("crontab " + fileName);
+            }
+            catch
+            {
+                //Event client_ErrorOccurred
+            }
         }
 
+
+        /// <summary>
+        /// Suppress the script file and recreate it 
+        /// </summary>
         public static void recreateScript(SshClient client){
             client.RunCommand("rm " + fileName);
             client.RunCommand("touch " + fileName);
             
         }
+
+
+        /// <summary>
+        /// get the List of all Event saved in contrab file
+        /// </summary>
         public static List<Event> getAllEvent(SshClient client){
             List<Event> eventList = new List<Event>();
             SshCommand cmd = client.RunCommand("cat "+fileName);
@@ -295,11 +359,13 @@ namespace AutomateMyHome
                 Event ev = new Event(client,list3[0],list3[1],list3[2],list3[3],list3[4],list4[list4.Length - 2]);
                 eventList.Add(ev);
              }
-            //recreateScript(client);
-            //addAllEventToCrontab(eventList);
             return eventList;
         }
 
+
+        /// <summary>
+        /// add all event from the the list in contrab file
+        /// </summary>
         public static void addAllEventToCrontab(List<Event> eventList)
         {
             foreach (Event e in eventList)
@@ -308,6 +374,10 @@ namespace AutomateMyHome
             }
         }
 
+
+        /// <summary>
+        /// get event corresponding line from contrab file
+        /// </summary>
         public int getEventLineInContrabFile()
         {
             String[] list2;
@@ -329,20 +399,33 @@ namespace AutomateMyHome
             return -1;
 
         }
-
+        /// <summary>
+        /// get all event line from script file
+        /// </summary>
         public static List<String> getAllLineFromScriptFile(SshClient client)
         {
-            SshCommand cmd = client.RunCommand("cat " + fileName);
-            String[] list = cmd.Result.Split('\n');
-            List<String> stringList = list.ToList<String>();
-            if (stringList.Last<string>() == "")
+            try
             {
-                stringList.RemoveAt(list.Length - 1);
+                SshCommand cmd = client.RunCommand("cat " + fileName);
+                String[] list = cmd.Result.Split('\n');
+                List<String> stringList = list.ToList<String>();
+                if (stringList.Last<string>() == "")
+                {
+                    stringList.RemoveAt(list.Length - 1);
+                }
+                return stringList;
             }
-            return stringList;
+            catch
+            {
+                //Event client_ErrorOccurred
+                return null;
+            }
 
         }
 
+        /// <summary>
+        /// get all Event corresponding line that contains this specific scenario name
+        /// </summary>
         public static List<int> getAllLineWhoContainsName(String name, SshClient client)
         {
             String[] list;
@@ -363,7 +446,9 @@ namespace AutomateMyHome
             }
             return lineNumberList;
         }
-
+        /// <summary>
+        /// Delete all Event that contains a specific scenario name from contrab file
+        /// </summary>
         public static void deleteAllEventWhoContainsThatScenario(String name, SshClient client)
         {
             List<int> LineNumberList = getAllLineWhoContainsName(name, client);
@@ -386,7 +471,9 @@ namespace AutomateMyHome
             client.RunCommand("crontab " + fileName);
 
         }
-
+        /// <summary>
+        /// Change string word in string number corresponding to the day of the week
+        /// </summary>
         private String getNumberFromString(string dayOfTheWeek)
         {
             String rightString = "*";

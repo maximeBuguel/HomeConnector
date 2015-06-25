@@ -22,6 +22,9 @@ namespace AutomateMyHome
     /// </summary>
     public partial class EventEditor : MetroWindow
     {
+        /// <summary>
+        /// Create a new Windows with combobox  
+        /// </summary>
         public EventEditor(List<String> scenarioList,SshClient client,Event ev)
         {
             InitializeComponent();
@@ -49,9 +52,9 @@ namespace AutomateMyHome
 
 
             addToDockPanel("Scenario",comboScenario);
-            addToDockPanel("Minutes",comboMinutes);
-            addToDockPanel("Hours",comboHours);
-            addToDockPanel("Days",comboDays);
+            addToDockPanel("Minute",comboMinutes);
+            addToDockPanel("Hour",comboHours);
+            addToDockPanel("Day",comboDays);
             addToDockPanel("Month",comboMonth);
             addToDockPanel("Day of the Week",comboWeeksDay);
             
@@ -77,6 +80,9 @@ namespace AutomateMyHome
             mainPanel.Children.Add(btns);
         }
 
+        /// <summary>
+        /// add a dockPanel with combobox to the mainPanel
+        /// </summary>
         private void addToDockPanel(String comboName,ComboBox combo){
             DockPanel dp = new DockPanel();
             BrushConverter bc = new BrushConverter();
@@ -93,6 +99,10 @@ namespace AutomateMyHome
             mainPanel.Children.Add(dp);
            
         }
+
+        /// <summary>
+        /// save modification or add new Event creation
+        /// </summary>
         private void img1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             specialObjectForButtonSender args = (specialObjectForButtonSender)((Image)sender).Tag;
@@ -112,6 +122,9 @@ namespace AutomateMyHome
             this.Close();
         }
 
+        /// <summary>
+        /// cancel modification of that Event
+        /// </summary>
         private void img2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DialogResult = false;
@@ -129,6 +142,9 @@ namespace AutomateMyHome
             Sunday
         };
 
+        /// <summary>
+        ///  fill a combobox with the right String content and add it to a List of combobox
+        /// </summary>
         private void addToComboBox(int number, ComboBox combo,List<ComboBox> comboList)
         {
             combo.SelectedIndex = 0;
@@ -171,6 +187,9 @@ namespace AutomateMyHome
 
         }
 
+        /// <summary>
+        ///  fill a combobox with all the scenarios name  and add it to a List of combobox
+        /// </summary>
         private void addAllScenarioToCombobox(ComboBox combo, List<String> scenarioList, List<ComboBox> comboList)
         {
             combo.SelectedIndex = 0;

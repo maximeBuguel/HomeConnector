@@ -15,12 +15,18 @@ namespace AutomateMyHome
     {
         public List<Room> Rooms { get; set; }
 
+        /// <summary>
+        /// Create a StackPanel that has a List of Rooms
+        /// </summary>
         public HomePanel(List<Room> rooms)
         {
             this.Rooms = rooms;
             InitialyseHomePanel();
         }
 
+        /// <summary>
+        /// Get all receptors on the box and put them in the view
+        /// </summary>
         public void InitialyseHomePanel()
         {
             this.Children.Clear();
@@ -67,8 +73,6 @@ namespace AutomateMyHome
                         Button imgI = new Button();
                         Image imgIb = new Image();
                         imgIb.Source = Utils.getImageSource(Properties.Resources.I);
-                        //imgIb.Width =24 ;
-                        //imgIb.Height = 24;
                         imgI.Content = imgIb;
                         imgI.Background = Utils.getColor(Utils.green);
                         imgI.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
@@ -78,8 +82,6 @@ namespace AutomateMyHome
                         Button imgO = new Button();
                         Image imgOb = new Image();
                         imgOb.Source = Utils.getImageSource(Properties.Resources.O);
-                        //imgOb.Width = 24;
-                        //imgOb.Height = 24;
                         imgOb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
                         imgOb.Tag = recp;
                         imgO.Click += imgO_Click;
@@ -96,12 +98,12 @@ namespace AutomateMyHome
                         Image imgIOb = new Image();
                         imgIOb.Source = Utils.getImageSource(Properties.Resources.IO);
                         imgIOb.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                        imgIOb.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                         imgIOb.Width = 48;
                         imgIOb.Height = 24;
                         imgIO.Tag = recp;
                         imgIO.Click += imgI_Click;
                         imgIO.Content = imgIOb;
-
                         imgIO.Background = Utils.getColor(Utils.purple);
                         btnPanel.Children.Add(imgIO);
 
@@ -115,23 +117,28 @@ namespace AutomateMyHome
 
             }
         }
-
+        /// <summary>
+        /// Call the function to turn off the specefic recptor
+        /// </summary>
         void imgO_Click(object sender, RoutedEventArgs e)
         {
             Receptor rep = (Receptor)((Button)sender).Tag;
             rep.sendCode2();
         }
 
+        /// <summary>
+        /// Call the function to turn on the specefic receptor
+        /// </summary>
         void imgI_Click(object sender, RoutedEventArgs e)
         {
             Receptor rep = (Receptor)((Button)sender).Tag;
             rep.sendCode1();
         }
 
-        void imgI_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Receptor rep = (Receptor)((Image)sender).Tag;
-            rep.sendCode1();
-        }
+        //void imgI_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    Receptor rep = (Receptor)((Image)sender).Tag;
+        //    rep.sendCode1();
+        //}
     }
 }

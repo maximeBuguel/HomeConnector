@@ -18,7 +18,9 @@ namespace AutomateMyHome
         public SshClient client { get; set; }
         public String Type { get; set; }
 
-
+        /// <summary>
+        /// Create a new Receptor
+        /// </summary>
         public Receptor(String name, Room room, Boolean twoFreq, String cd1, String cd2, SshClient c, String type)
         {
             this.Name = name;
@@ -30,23 +32,44 @@ namespace AutomateMyHome
             this.Type = type;
         }
 
+        /// <summary>
+        /// Send the code 1 of a receptor (often the turn On)
+        /// </summary>
         public void sendCode1()
         {
-            client.RunCommand("sudo ./HomeConnector/codesend " + commandeOn);
+            try
+            {
+                client.RunCommand("sudo ./HomeConnector/codesend " + commandeOn);
+            }
+            catch
+            {
+                //Event client_ErrorOccurred
+            }
         }
-
+        /// <summary>
+        /// Send the code 2 of a receptor (often the turn Off)
+        /// </summary>
         public void sendCode2()
         {
-            if (twoFrequencies)
+            try
             {
-                client.RunCommand("sudo ./HomeConnector/codesend " + commandeOff);
+                if (twoFrequencies)
+                {
+                    client.RunCommand("sudo ./HomeConnector/codesend " + commandeOff);
+                }
+                else
+                {
+                    this.sendCode1();
+                }
             }
-            else
+            catch
             {
-                this.sendCode1();
+                //Event client_ErrorOccurred
             }
         }
-
+        /// <summary>
+        /// Get on the box all the receptors
+        /// </summary>
         public static List<Receptor> getReceptors(SshClient c, List<Room> rooms) {
             List<Receptor> receptors = new List<Receptor>();
             SshCommand cmd = c.RunCommand("cat HomeConnector/Receptors.json ");
@@ -66,14 +89,12 @@ namespace AutomateMyHome
                 receptors.Add(newRecp);
                 room.addReceptor(newRecp);
             }
-
-
-
-
                 return receptors;
-        
         }
 
+        /// <summary>
+        /// Get the Icon associated to the type of a receptor
+        /// </summary>
         public System.Drawing.Bitmap getIcon()
         {
             if (this.Type == "Light")
@@ -87,17 +108,27 @@ namespace AutomateMyHome
             }
         }
 
-      
 
 
+        /// <summary>
+        /// Update the list of receptors on the box
+        /// </summary>
         public static void refresh(SshClient c ,List<Receptor> receps)
         {
-            List<JSONReceptor> JSONRecep = new List<JSONReceptor>();
-            foreach(Receptor r in receps){
-                JSONRecep.Add(new JSONReceptor(r));
+            try
+            {
+                List<JSONReceptor> JSONRecep = new List<JSONReceptor>();
+                foreach (Receptor r in receps)
+                {
+                    JSONRecep.Add(new JSONReceptor(r));
+                }
+                String output = JsonConvert.SerializeObject(JSONRecep);
+                c.RunCommand("echo \"" + output.Replace("\"", "\\\"") + "\" > HomeConnector/Receptors.json");
             }
-            String output = JsonConvert.SerializeObject(JSONRecep);
-            c.RunCommand("echo \"" + output.Replace("\"","\\\"") + "\" > HomeConnector/Receptors.json");
+            catch
+            {
+                //Event client_ErrorOccurred
+            }
         }
     }
 

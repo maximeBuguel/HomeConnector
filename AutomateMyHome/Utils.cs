@@ -19,13 +19,18 @@ namespace AutomateMyHome
         public static readonly FontFamily appFont = new FontFamily("Segoe UI");
         public static readonly FontWeight  weightFont= FontWeights.Thin ;
 
-        
+        /// <summary>
+        /// Get the brush with the good collor assigned
+        /// </summary>
         public static Brush getColor(String s) {
             BrushConverter bc = new BrushConverter();
             Brush brush = (Brush)bc.ConvertFrom(s);
             return brush;
         }
 
+        /// <summary>
+        /// Get an imageSource  from a bitmap so it's easier to use 
+        /// </summary>
         public static ImageSource getImageSource(System.Drawing.Bitmap b) {
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(b.GetHbitmap(),
                     IntPtr.Zero,

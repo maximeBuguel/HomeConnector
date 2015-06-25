@@ -27,12 +27,11 @@ C:\Users\isen\documents\visual studio 2013\Projects\AutomateMyHome\AutomateMyHom
 C:\Users\isen\documents\visual studio 2013\Projects\AutomateMyHome\AutomateMyHome\obj\Release\SignalSeeker.baml
 C:\Users\isen\documents\visual studio 2013\Projects\AutomateMyHome\AutomateMyHome\obj\Release\SignalSeeker.g.cs
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\AutomateMyHome.exe.config
-C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.exe
-C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.pdb
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\AutomateMyHome.exe
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\AutomateMyHome.pdb
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\MahApps.Metro.dll
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\Newtonsoft.Json.dll
+C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\Renci.SshNet.dll
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\System.Windows.Interactivity.dll
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\MahApps.Metro.xml
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\Newtonsoft.Json.xml
@@ -53,4 +52,5 @@ C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\Automat
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.g.resources
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.Properties.Resources.resources
 C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.csproj.GenerateResource.Cache
-C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\bin\Release\Renci.SshNet.dll
+C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.exe
+C:\Users\isen\Documents\Visual Studio 2013\Projects\AutomateMyHomefinal1\AutomateMyHome\obj\Release\AutomateMyHome.pdb
